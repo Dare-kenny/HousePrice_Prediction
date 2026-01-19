@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>House Price Prediction</title>
+  <style>
+    body { font-family: system-ui, Arial; max-width: 900px; margin: 40px auto; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 18px; }
+    .row { display: grid; grid-template-columns: 220px 1fr; gap: 10px; margin: 10px 0; }
+    input { padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+    button { padding: 10px 14px; border: 0; border-radius: 8px; cursor: pointer; }
+    .ok { color: #0a7; font-weight: 800; }
+    .err { color: #c00; font-weight: 700; }
+    code { background: #f6f6f6; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>House Price Prediction System</h1>
+
+  <div class="card">
+    <form method="post" action="/predict">
+      {% for f in features %}
+        <div class="row">
+          <div><label for="{{f}}"><code>{{ f }}</code></label></div>
+          <div><input id="{{f}}" name="{{f}}" placeholder="Enter {{f}}" /></div>
+        </div>
+      {% endfor %}
+
+      <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+      <p class="ok">Predicted SalePrice: {{ result }}</p>
+    {% endif %}
+    {% if error %}
+      <p class="err">Error: {{ error }}</p>
+    {% endif %}
+
+    <p style="margin-top:18px;">
+      Notes:
+      <br>- Use the Kaggle <code>train.csv</code> file.
+      <br>- Features used: OverallQual, GrLivArea, TotalBsmtSF, GarageCars, YearBuilt, FullBath.
+    </p>
+  </div>
+</body>
+</html>
